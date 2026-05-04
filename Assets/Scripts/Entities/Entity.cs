@@ -48,4 +48,14 @@ public class Entity : MonoBehaviour
     {
         _targets = target;
     }
+
+    public void SetBattlePosition(Transform battlePosition)
+    {
+        transform.position = battlePosition.position;
+    }
+
+    public void Initialize(Sprite sprite, int health, int damage, int attackDelay)
+    {
+        
+    }
 }
