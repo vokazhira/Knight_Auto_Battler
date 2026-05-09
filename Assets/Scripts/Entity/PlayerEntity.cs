@@ -16,6 +16,7 @@ public class PlayerEntity : Entity
             base.Init(playerData);
             Armor = playerData.Armor;
             Exp = playerData.Exp;
+            EventManager.EnemyDied += AddExp;
         }
     }
 
@@ -33,14 +34,25 @@ public class PlayerEntity : Entity
 
     public override void Attack()
     {
+        if (_currentTarget == null || !_currentTarget.IsAlive())
+        {
+            _currentTarget = BattleController.Instance.GetRandomAliveEnemy();
+        }
+        
         if (_currentTarget != null && _currentTarget.IsAlive())
         {
-            //TODO: батлконтролер выдает цель
+            _currentTarget.TakeDamage(Damage);
         }
     }
 
     public void AddExp(int amount)
     {
         Exp += amount;
+    }
+
+    public override void Die()
+    {
+        EventManager.OnPlayerDied();
+        EventManager.EnemyDied -= AddExp;
     }
 }

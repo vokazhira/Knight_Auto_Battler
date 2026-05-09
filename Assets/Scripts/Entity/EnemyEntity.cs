@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Lean.Pool;
 using UnityEngine;
 
 public class EnemyEntity : Entity
@@ -17,7 +18,7 @@ public class EnemyEntity : Entity
         }
     }
     
-    public void SetPlayer(PlayerEntity player)
+    public void SetPlayerAsTarget(PlayerEntity player)
     {
         _player = player;
     }
@@ -27,5 +28,9 @@ public class EnemyEntity : Entity
         _player.TakeDamage(Damage);
     }
 
-
+    public override void Die()
+    {
+        EventManager.OnEnemyDied(ExpReward);
+        LeanPool.Despawn(this.gameObject);
+    }
 }

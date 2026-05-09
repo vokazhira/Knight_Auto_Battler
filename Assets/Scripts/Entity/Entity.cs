@@ -14,8 +14,6 @@ public abstract class Entity : MonoBehaviour
     protected float _currentAttackTime;
     protected SpriteRenderer _spriteRenderer;
 
-    public event Action<Entity> OnDeath;
-
     protected virtual void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -59,11 +57,7 @@ public abstract class Entity : MonoBehaviour
         }
     }
 
-    public virtual void Die()
-    {
-        OnDeath?.Invoke(this);
-        LeanPool.Despawn(this.gameObject);
-    }
+    public abstract void Die();
     
     public bool IsAlive() => Health > 0;
 }

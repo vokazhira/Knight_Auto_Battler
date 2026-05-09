@@ -17,6 +17,6 @@ public class LevelInfo
 [Serializable]
 public class BattleInfo
 {
-    public EnemyEntity[] Enemies;
+    public EnemyData[] Enemies;
 }
 
