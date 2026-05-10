@@ -6,7 +6,7 @@ using UnityEngine;
 
 public abstract class Entity : MonoBehaviour
 {
-    public int Health { get; protected set; }
+    public int CurrentHealth { get; protected set; }
     public int MaxHealth { get; protected set; }
     public int Damage { get; protected set; }
     public float AttackDelay { get; protected set; }
@@ -35,7 +35,7 @@ public abstract class Entity : MonoBehaviour
     public virtual void Init(EntityData data)
     {
         MaxHealth = data.Health;
-        Health = MaxHealth;
+        CurrentHealth = MaxHealth;
         Damage = data.Damage;
         AttackDelay = data.AttackDelay;
         _spriteRenderer.sprite = data.Sprite;
@@ -45,19 +45,21 @@ public abstract class Entity : MonoBehaviour
 
     public virtual void TakeDamage(int damage)
     {
-        Health -= damage;
-        if (Health <= 0)
+        CurrentHealth -= damage;
+        if (CurrentHealth <= 0)
         {
-            Health = 0;
+            CurrentHealth = 0;
             Die();
         }
         else
         {
             //TODO: логика хелфбара
+            float currentHealthAsPercentage = (float) CurrentHealth / MaxHealth;
+            EventManager.OnHealthChanged(currentHealthAsPercentage);
         }
     }
 
     public abstract void Die();
     
-    public bool IsAlive() => Health > 0;
+    public bool IsAlive() => CurrentHealth > 0;
 }
