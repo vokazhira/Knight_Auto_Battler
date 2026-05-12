@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerEntity : Entity
 {
     public int Armor {get; private set;}
-    public int Exp  {get; private set;}
+    public int Exp {get; private set;}
     
     private EnemyEntity _currentTarget;
 
@@ -16,7 +16,7 @@ public class PlayerEntity : Entity
             base.Init(playerData);
             Armor = playerData.Armor;
             Exp = playerData.Exp;
-            EventManager.EnemyDied += AddExp;
+            EventManager.Subscribe(GameEvents.EnemyDeath, AddExp);
         }
     }
 
@@ -36,7 +36,7 @@ public class PlayerEntity : Entity
     {
         if (_currentTarget == null || !_currentTarget.IsAlive())
         {
-            _currentTarget = BattleController.Instance.GetRandomAliveEnemy();
+            _currentTarget = BattleController.GetRandomAliveEnemy();
         }
         
         if (_currentTarget != null && _currentTarget.IsAlive())
@@ -45,14 +45,16 @@ public class PlayerEntity : Entity
         }
     }
 
-    public void AddExp(int amount)
+    public void AddExp(object exp)
     {
-        Exp += amount;
+        if (exp is int expInt)
+        {
+            Exp += expInt;
+        }
     }
 
     public override void Die()
     {
-        EventManager.OnPlayerDied();
-        EventManager.EnemyDied -= AddExp;
+        EventManager.Invoke(GameEvents.PlayerDied);
     }
 }

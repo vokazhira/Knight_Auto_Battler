@@ -4,11 +4,12 @@ using UnityEngine.UI;
 public class HealthBar : MonoBehaviour
 {
     [SerializeField] private Image _healthBarFilling;
-    [SerializeField] private Entity _playerEntity;
+    [SerializeField] private Entity _entity;
     
-    private void Awake()
+    private void Start()
     {
-        EventManager.HealthChanged += OnHealthChanged;
+        _entity.HealthChanged += OnHealthChanged;
+        OnHealthChanged(1f);
     }
 
     private void OnHealthChanged(float valueAsPercentage)
@@ -18,6 +19,6 @@ public class HealthBar : MonoBehaviour
     
     private void OnDestroy()
     {
-        EventManager.HealthChanged -= OnHealthChanged;
+        _entity.HealthChanged -= OnHealthChanged;
     }
 }

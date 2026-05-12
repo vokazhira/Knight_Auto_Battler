@@ -1,23 +1,46 @@
 using System;
+using System.Collections.Generic;
 
-public class EventManager
+public static class EventManager
 {
-    public static event Action<int> EnemyDied;
-    public static event Action PlayerDied;
-    public static event Action<float> HealthChanged;
+    private static Dictionary<string, Action<object>> eventDictionary = 
+        new Dictionary<string, Action<object>>();
 
-    public static void OnEnemyDied(int amount)
+    public static void Subscribe(string eventName, Action<object> callback)
     {
-        EnemyDied?.Invoke(amount);
+        if (eventDictionary.TryGetValue(eventName, out Action<object> action))
+        {
+            action += callback;
+            eventDictionary[eventName] = action;
+        }
+        else
+        {
+            action += callback;
+            eventDictionary.Add(eventName, action);
+        }
     }
 
-    public static void OnPlayerDied()
+    public static void Unsubscribe(string eventName, Action<object> callback)
     {
-        PlayerDied?.Invoke();
+        if (eventDictionary.TryGetValue(eventName, out Action<object> action))
+        {
+            action -= callback;
+            eventDictionary[eventName] = action;
+        }
     }
 
-    public static void OnHealthChanged(float amount)
+    public static void Invoke(string eventName, object arg = null)
     {
-        HealthChanged?.Invoke(amount);
+        if (eventDictionary.TryGetValue(eventName, out Action<object> action))
+        {
+            action?.Invoke(arg);
+        }
     }
+}
+
+public static class GameEvents
+{
+    public const string PlayerDied = "PlayerDied";
+    public const string EnemyDeath = "EnemyDeath";
+    public const string HealthChanged = "HealthChanged";
 }

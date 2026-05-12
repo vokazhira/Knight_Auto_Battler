@@ -30,12 +30,29 @@ public class BattleController : MonoBehaviour
     
     private LevelInfo _currentLevel;
     private int _currentBattleIndex;
+    
+    private GameManager _gameManager;
 
+    private void OnEnable()
+    {
+        EventManager.Subscribe(GameEvents.EnemyDeath, CheckBattleWin);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.Unsubscribe(GameEvents.EnemyDeath, CheckBattleWin);
+    }
+
+    private void Start()
+    {
+        _gameManager = GameManager.Instance;
+    }
+    
     public void StartLevel(LevelInfo level)
     {
         _currentLevel = level;
         _currentBattleIndex = 0;
-        EventManager.EnemyDied += CheckBattleWin;
+        
         StartBattle(level.Battles[0]);
     }
 
@@ -45,15 +62,15 @@ public class BattleController : MonoBehaviour
         SpawnEntities(battleInfo);
     }
 
-    public EnemyEntity GetRandomAliveEnemy()
+    public static EnemyEntity GetRandomAliveEnemy()
     {
         List<EnemyEntity> activeEnemies = new List<EnemyEntity>();
         
-        for (int i = 0; i < _activeEnemies.Count; i++)
+        for (int i = 0; i < Instance._activeEnemies.Count; i++)
         {
-            if (_activeEnemies[i] != null && _activeEnemies[i].IsAlive())
+            if (Instance._activeEnemies[i] != null && Instance._activeEnemies[i].IsAlive())
             {
-                activeEnemies.Add(_activeEnemies[i]);
+                activeEnemies.Add(Instance._activeEnemies[i]);
             }
         }
 
@@ -69,9 +86,7 @@ public class BattleController : MonoBehaviour
         if (Player == null)
         {
             Player = LeanPool.Spawn(_playerPrefab, _playerPosition.position, Quaternion.identity);
-            Player.Init(GameManager.Instance.PlayerData);
-            
-            //TODO: инициализировать хелфбар player
+            Player.Init(_gameManager.PlayerData);
         }
         
         HashSet<int> usedSpawnPoints = new HashSet<int>();
@@ -89,8 +104,7 @@ public class BattleController : MonoBehaviour
             
             EnemyEntity enemy = LeanPool.Spawn(_enemyPrefab, _enemyPositions[posIndex].position, Quaternion.identity);
             enemy.Init(battleInfo.Enemies[i]);
-            enemy.SetPlayerAsTarget(Player );
-            //TODO: инициализировать хелфбар enemy
+            enemy.SetPlayerAsTarget(Player);
             
             _activeEnemies.Add(enemy);
         }
@@ -105,12 +119,7 @@ public class BattleController : MonoBehaviour
         _activeEnemies.Clear();
     }
 
-    /*private void OnEnemyDied()
-    {
-        CheckBattleWin(int expAmount);
-    }*/
-
-    private void CheckBattleWin(int expAmount)
+    private void CheckBattleWin(object obj)
     {
         if (AreAllEnemiesDead())
         {

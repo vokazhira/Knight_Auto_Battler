@@ -30,7 +30,7 @@ public class EnemyEntity : Entity
 
     public override void Die()
     {
-        EventManager.OnEnemyDied(ExpReward);
+        EventManager.Invoke(GameEvents.EnemyDeath, ExpReward);
         LeanPool.Despawn(this.gameObject);
     }
 }

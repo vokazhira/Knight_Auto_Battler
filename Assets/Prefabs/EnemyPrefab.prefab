@@ -290,7 +290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthBarFilling: {fileID: 1560559033156203140}
-  _playerEntity: {fileID: 5827296114474788851}
+  _entity: {fileID: 0}
 --- !u!1 &7172865146565241991
 GameObject:
   m_ObjectHideFlags: 0

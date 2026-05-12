@@ -13,6 +13,8 @@ public abstract class Entity : MonoBehaviour
 
     protected float _currentAttackTime;
     protected SpriteRenderer _spriteRenderer;
+    
+    public event Action<float> HealthChanged;
 
     protected virtual void Start()
     {
@@ -41,8 +43,6 @@ public abstract class Entity : MonoBehaviour
         _spriteRenderer.sprite = data.Sprite;
     }
 
-    public abstract void Attack();
-
     public virtual void TakeDamage(int damage)
     {
         CurrentHealth -= damage;
@@ -55,10 +55,11 @@ public abstract class Entity : MonoBehaviour
         {
             //TODO: логика хелфбара
             float currentHealthAsPercentage = (float) CurrentHealth / MaxHealth;
-            EventManager.OnHealthChanged(currentHealthAsPercentage);
+            HealthChanged?.Invoke(currentHealthAsPercentage);
         }
     }
 
+    public abstract void Attack();
     public abstract void Die();
     
     public bool IsAlive() => CurrentHealth > 0;
