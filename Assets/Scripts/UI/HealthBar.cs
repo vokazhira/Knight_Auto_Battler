@@ -6,19 +6,18 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private Image _healthBarFilling;
     [SerializeField] private Entity _entity;
     
-    private void Start()
+    private void OnEnable()
     {
         _entity.HealthChanged += OnHealthChanged;
-        OnHealthChanged(1f);
+    }
+    
+    private void OnDisable()
+    {
+        _entity.HealthChanged -= OnHealthChanged;
     }
 
     private void OnHealthChanged(float valueAsPercentage)
     {
         _healthBarFilling.fillAmount = valueAsPercentage;
-    }
-    
-    private void OnDestroy()
-    {
-        _entity.HealthChanged -= OnHealthChanged;
     }
 }

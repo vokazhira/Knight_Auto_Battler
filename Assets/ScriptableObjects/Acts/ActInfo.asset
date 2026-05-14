@@ -12,4 +12,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ec5913be425d40438070d33e19089df, type: 3}
   m_Name: ActInfo
   m_EditorClassIdentifier: 
-  Levels: []
+  Levels:
+  - Background: {fileID: 0}
+    Battles:
+    - Enemies:
+      - {fileID: 11400000, guid: bf415171e02878844a435d8a020cd893, type: 2}
+      - {fileID: 11400000, guid: bf415171e02878844a435d8a020cd893, type: 2}
+      - {fileID: 11400000, guid: bf415171e02878844a435d8a020cd893, type: 2}
+    - Enemies:
+      - {fileID: 11400000, guid: bf415171e02878844a435d8a020cd893, type: 2}
+      - {fileID: 11400000, guid: bf415171e02878844a435d8a020cd893, type: 2}
+      - {fileID: 11400000, guid: bf415171e02878844a435d8a020cd893, type: 2}
+    - Enemies:
+      - {fileID: 11400000, guid: bf415171e02878844a435d8a020cd893, type: 2}
+      - {fileID: 11400000, guid: bf415171e02878844a435d8a020cd893, type: 2}
+      - {fileID: 11400000, guid: bf415171e02878844a435d8a020cd893, type: 2}
+  - Background: {fileID: 0}
+    Battles:
+    - Enemies:
+      - {fileID: 11400000, guid: bf415171e02878844a435d8a020cd893, type: 2}
+      - {fileID: 11400000, guid: bf415171e02878844a435d8a020cd893, type: 2}
+      - {fileID: 11400000, guid: bf415171e02878844a435d8a020cd893, type: 2}
+    - Enemies:
+      - {fileID: 11400000, guid: bf415171e02878844a435d8a020cd893, type: 2}
+      - {fileID: 11400000, guid: bf415171e02878844a435d8a020cd893, type: 2}
+      - {fileID: 11400000, guid: bf415171e02878844a435d8a020cd893, type: 2}
+    - Enemies:
+      - {fileID: 11400000, guid: bf415171e02878844a435d8a020cd893, type: 2}
+      - {fileID: 11400000, guid: bf415171e02878844a435d8a020cd893, type: 2}
+      - {fileID: 11400000, guid: bf415171e02878844a435d8a020cd893, type: 2}
+  - Background: {fileID: 0}
+    Battles:
+    - Enemies:
+      - {fileID: 11400000, guid: bf415171e02878844a435d8a020cd893, type: 2}
+      - {fileID: 11400000, guid: bf415171e02878844a435d8a020cd893, type: 2}
+      - {fileID: 11400000, guid: bf415171e02878844a435d8a020cd893, type: 2}
+    - Enemies:
+      - {fileID: 11400000, guid: bf415171e02878844a435d8a020cd893, type: 2}
+      - {fileID: 11400000, guid: bf415171e02878844a435d8a020cd893, type: 2}
+      - {fileID: 11400000, guid: bf415171e02878844a435d8a020cd893, type: 2}
+    - Enemies:
+      - {fileID: 11400000, guid: bf415171e02878844a435d8a020cd893, type: 2}
+      - {fileID: 11400000, guid: bf415171e02878844a435d8a020cd893, type: 2}
+      - {fileID: 11400000, guid: bf415171e02878844a435d8a020cd893, type: 2}

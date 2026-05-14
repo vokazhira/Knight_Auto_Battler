@@ -36,16 +36,26 @@ public class BattleController : MonoBehaviour
     private void OnEnable()
     {
         EventManager.Subscribe(GameEvents.EnemyDeath, CheckBattleWin);
+        EventManager.Subscribe(GameEvents.StartLevel, OnStartLevel);
     }
 
     private void OnDisable()
     {
         EventManager.Unsubscribe(GameEvents.EnemyDeath, CheckBattleWin);
+        EventManager.Unsubscribe(GameEvents.StartLevel, OnStartLevel);
     }
 
     private void Start()
     {
         _gameManager = GameManager.Instance;
+    }
+    
+    private void OnStartLevel(object levelObj)
+    {
+        if (levelObj is LevelInfo levelInfo)
+        {
+            StartLevel(levelInfo);
+        }
     }
     
     public void StartLevel(LevelInfo level)
@@ -137,8 +147,13 @@ public class BattleController : MonoBehaviour
         }
         else
         {
-            //TODO:Класс levelSelectionUI показывает окно итогов боя и возвращает на выбор уровня
+            LevelCompleted();
         }
+    }
+
+    private void LevelCompleted()
+    {
+        EventManager.Invoke(GameEvents.LevelCompleted);
     }
 
     private bool AreAllEnemiesDead()

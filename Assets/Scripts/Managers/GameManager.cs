@@ -14,11 +14,72 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+        
+        CurrentActIndex = 0;
+        CurrentLevelIndex = 0;
+        
+        _completedLevelsPerAct = new int[_acts.Length];
+        _completedLevelsPerAct[0] = 0;
     }
     
-    [SerializeField] private PlayerData playerDataData;
+    [SerializeField] private PlayerData _playerData;
     [SerializeField] private ActInfo[] _acts;
+    [SerializeField] private LevelSelectionUI _levelSelectionUI;
     
-    public PlayerData PlayerData => playerDataData;
+    public PlayerData PlayerData => _playerData;
     public ActInfo[] Acts => _acts;
+    public LevelSelectionUI LevelSelectionUI => _levelSelectionUI;
+
+    private int[] _completedLevelsPerAct;
+    
+    public int CurrentActIndex { get; private set; }
+    public int CurrentLevelIndex { get; private set; }
+
+    private void Start()
+    {
+        
+    }
+
+    public void SetCurrentActIndex(int actIndex)
+    {
+        CurrentActIndex = actIndex;
+    }
+    
+    public void SetCurrentLevelIndex(int levelIndex)
+    {
+        CurrentLevelIndex = levelIndex;
+    }
+    
+    public void CompleteLevel(int actIndex, int levelIndex)
+    {
+        if (levelIndex >= _completedLevelsPerAct[actIndex])
+        {
+            _completedLevelsPerAct[actIndex] = levelIndex + 1;
+
+            if (_completedLevelsPerAct[actIndex] >= _acts[actIndex].Levels.Length)
+            {
+                if (actIndex + 1 < _acts.Length)
+                {
+                    _completedLevelsPerAct[actIndex + 1] = 0;
+                }
+            }
+            
+            EventManager.Invoke(GameEvents.ProgressUpdated);
+        }
+    }
+
+    public bool IsLevelUnlocked(int actIndex, int levelIndex)
+    {
+        if (actIndex == 0 && levelIndex == 0) return true;
+        
+        return levelIndex <= _completedLevelsPerAct[actIndex];
+    }
+
+    public bool IsActUnlocked(int actIndex)
+    {
+        if (actIndex == 0) return true;
+        if (actIndex >= _acts.Length) return false;
+        
+        return _completedLevelsPerAct[actIndex - 1] >= _acts[actIndex - 1].Levels.Length;
+    }
 }
