@@ -50,6 +50,7 @@ public class BattleController : MonoBehaviour
     private void Start()
     {
         _gameManager = GameManager.Instance;
+        SpawnPlayer();
     }
     
     private void OnStartLevel(object levelObj)
@@ -100,15 +101,18 @@ public class BattleController : MonoBehaviour
         ClearBattle();
         _gameManager.LevelSelectionUI.ShowPanel(true);
     }
-    
-    private void SpawnEntities(BattleInfo battleInfo)
+
+    private void SpawnPlayer()
     {
         if (Player == null)
         {
             Player = LeanPool.Spawn(_playerPrefab, _playerPosition.position, Quaternion.identity);
             Player.Init(_gameManager.PlayerData);
         }
-        
+    }
+    
+    private void SpawnEntities(BattleInfo battleInfo)
+    {
         HashSet<int> usedSpawnPoints = new HashSet<int>();
 
         for (int i = 0; i < battleInfo.Enemies.Length; i++)

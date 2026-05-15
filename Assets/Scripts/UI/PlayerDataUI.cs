@@ -10,33 +10,33 @@ public class PlayerDataUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _armorText;
     [SerializeField] private TextMeshProUGUI _damageText;
     [SerializeField] private TextMeshProUGUI _attackDelayText;
-
-    private GameManager _gameManager;
-    //нужен не плеерДата, а плеерЕнтити
+    
+    private BattleController _battleController;
     
     private void Start()
     {
-        _gameManager = GameManager.Instance;
+        _battleController = BattleController.Instance;
+        UpdateAllStats();
     }
 
     public void UpdateMaxHealth()
     {
-        _maxHealthText.text = $"Здоровье: {_gameManager.PlayerData.Health}";
+        _maxHealthText.text = $"Здоровье: {_battleController.Player.MaxHealth}";
     }
 
     public void UpdateArmor()
     {
-        _armorText.text = $"Защита: {_gameManager.PlayerData.Armor}";
+        _armorText.text = $"Защита: {_battleController.Player.Armor}";
     }
 
     public void UpdateDamage()
     {
-        _damageText.text = $"Урон: {_gameManager.PlayerData.Damage}";
+        _damageText.text = $"Урон: {_battleController.Player.Damage}";
     }
 
     public void UpdateAttackDelay()
     {
-        _attackDelayText.text = $"Скр. атаки: {_gameManager.PlayerData.AttackDelay}";
+        _attackDelayText.text = $"Скр. атаки: {_battleController.Player.AttackDelay}";
     }
 
     public void UpdateAllStats()
