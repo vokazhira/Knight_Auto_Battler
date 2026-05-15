@@ -42,8 +42,8 @@ public static class GameEvents
 {
     public const string PlayerDied = "PlayerDied";
     public const string EnemyDeath = "EnemyDeath";
-    /*public const string HealthChanged = "HealthChanged";*/
     public const string ProgressUpdated = "ProgressUpdated";
     public const string StartLevel = "StartLevel";
     public const string LevelCompleted = "LevelCompleted";
+    public const string LevelFailed = "LevelFailed";
 }

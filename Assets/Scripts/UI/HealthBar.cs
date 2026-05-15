@@ -16,7 +16,7 @@ public class HealthBar : MonoBehaviour
         _entity.HealthChanged -= OnHealthChanged;
     }
 
-    private void OnHealthChanged(float valueAsPercentage)
+    public void OnHealthChanged(float valueAsPercentage)
     {
         _healthBarFilling.fillAmount = valueAsPercentage;
     }

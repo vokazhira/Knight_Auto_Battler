@@ -13,12 +13,14 @@ public abstract class Entity : MonoBehaviour
 
     protected float _currentAttackTime;
     protected SpriteRenderer _spriteRenderer;
+    protected HealthBar _healthBar;
     
     public event Action<float> HealthChanged;
 
     protected virtual void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _healthBar = GetComponentInChildren<HealthBar>();
     }
 
     protected virtual void Update()
@@ -41,7 +43,6 @@ public abstract class Entity : MonoBehaviour
         Damage = data.Damage;
         AttackDelay = data.AttackDelay;
         _spriteRenderer.sprite = data.Sprite;
-        transform.localScale = new Vector3(0.5f, 0.5f, 0.5f); 
             
         HealthChanged?.Invoke(1f);
     }
@@ -60,6 +61,13 @@ public abstract class Entity : MonoBehaviour
             HealthChanged?.Invoke(currentHealthAsPercentage);
         }
     }
+    
+    public void ResetHealth(object obj)
+    {
+        CurrentHealth = MaxHealth;
+        HealthChanged?.Invoke(CurrentHealth/MaxHealth);
+    }
+
 
     public abstract void Attack();
     public abstract void Die();

@@ -21,7 +21,8 @@ public class LevelSelectionUI : MonoBehaviour
         RefreshLevelButtons();
         
         EventManager.Subscribe(GameEvents.ProgressUpdated, OnProgressUpdated);
-        EventManager.Subscribe(GameEvents.LevelCompleted, OnLevelCompletedEvent);
+        EventManager.Subscribe(GameEvents.LevelCompleted, OnLevelCompleted);
+        EventManager.Subscribe(GameEvents.LevelFailed, OnLevelFailed);
         
         ShowPanel(true);
     }
@@ -29,7 +30,8 @@ public class LevelSelectionUI : MonoBehaviour
     private void OnDisable()
     {
         EventManager.Unsubscribe(GameEvents.ProgressUpdated, OnProgressUpdated);
-        EventManager.Unsubscribe(GameEvents.LevelCompleted, OnLevelCompletedEvent);
+        EventManager.Unsubscribe(GameEvents.LevelCompleted, OnLevelCompleted);
+        EventManager.Unsubscribe(GameEvents.LevelFailed, OnLevelFailed);
     }
 
     private void InitActButtons()
@@ -78,19 +80,19 @@ public class LevelSelectionUI : MonoBehaviour
         InitActButtons();
         RefreshLevelButtons();
     }
-    
-    private void OnLevelCompletedEvent(object obj)
+
+    public void OnLevelCompleted(object obj)
     {
-        OnLevelCompleted();
+        _gameManager.CompleteLevel(_gameManager.CurrentActIndex, _gameManager.CurrentLevelIndex);
         ShowPanel(true);
     }
 
-    public void OnLevelCompleted()
+    private void OnLevelFailed(object obj)
     {
-        _gameManager.CompleteLevel(_gameManager.CurrentActIndex, _gameManager.CurrentLevelIndex);
+        ShowPanel(true);
     }
 
-    private void ShowPanel(bool isActive)
+    public void ShowPanel(bool isActive)
     {
         _selectionPanel.SetActive(isActive);
     }

@@ -3,6 +3,19 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    
+    [SerializeField] private PlayerData _playerData;
+    [SerializeField] private ActInfo[] _acts;
+    [SerializeField] private LevelSelectionUI _levelSelectionUI;
+    
+    public PlayerData PlayerData => _playerData;
+    public ActInfo[] Acts => _acts;
+    public LevelSelectionUI LevelSelectionUI => _levelSelectionUI;
+
+    private int[] _completedLevelsPerAct;
+    
+    public int CurrentActIndex { get; private set; }
+    public int CurrentLevelIndex { get; private set; }
 
     private void Awake()
     {
@@ -22,19 +35,6 @@ public class GameManager : MonoBehaviour
         _completedLevelsPerAct[0] = 0;
     }
     
-    [SerializeField] private PlayerData _playerData;
-    [SerializeField] private ActInfo[] _acts;
-    [SerializeField] private LevelSelectionUI _levelSelectionUI;
-    
-    public PlayerData PlayerData => _playerData;
-    public ActInfo[] Acts => _acts;
-    public LevelSelectionUI LevelSelectionUI => _levelSelectionUI;
-
-    private int[] _completedLevelsPerAct;
-    
-    public int CurrentActIndex { get; private set; }
-    public int CurrentLevelIndex { get; private set; }
-
     private void Start()
     {
         

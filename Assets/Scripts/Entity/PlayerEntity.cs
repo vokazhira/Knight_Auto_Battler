@@ -8,7 +8,7 @@ public class PlayerEntity : Entity
     public int Exp {get; private set;}
     
     private EnemyEntity _currentTarget;
-
+    
     public override void Init(EntityData data)
     {
         if (data is PlayerData playerData)
@@ -17,6 +17,7 @@ public class PlayerEntity : Entity
             Armor = playerData.Armor;
             Exp = playerData.Exp;
             EventManager.Subscribe(GameEvents.EnemyDeath, AddExp);
+            EventManager.Subscribe(GameEvents.PlayerDied, ResetHealth);
         }
     }
 
@@ -52,7 +53,7 @@ public class PlayerEntity : Entity
             Exp += expInt;
         }
     }
-
+    
     public override void Die()
     {
         EventManager.Invoke(GameEvents.PlayerDied);

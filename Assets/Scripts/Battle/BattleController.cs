@@ -37,12 +37,14 @@ public class BattleController : MonoBehaviour
     {
         EventManager.Subscribe(GameEvents.EnemyDeath, CheckBattleWin);
         EventManager.Subscribe(GameEvents.StartLevel, OnStartLevel);
+        EventManager.Subscribe(GameEvents.PlayerDied, OnPlayerDied);
     }
 
     private void OnDisable()
     {
         EventManager.Unsubscribe(GameEvents.EnemyDeath, CheckBattleWin);
         EventManager.Unsubscribe(GameEvents.StartLevel, OnStartLevel);
+        EventManager.Unsubscribe(GameEvents.PlayerDied, OnPlayerDied);
     }
 
     private void Start()
@@ -64,6 +66,7 @@ public class BattleController : MonoBehaviour
         _currentBattleIndex = 0;
         
         StartBattle(level.Battles[0]);
+        Player.ResetHealth(null);
     }
 
     public void StartBattle(BattleInfo battleInfo)
@@ -89,6 +92,13 @@ public class BattleController : MonoBehaviour
             return null;
         }
         return activeEnemies[Random.Range(0, activeEnemies.Count)];
+    }
+
+    private void OnPlayerDied(object obj)
+    {
+        StopCoroutine("NextBattleAfterDelay");
+        ClearBattle();
+        _gameManager.LevelSelectionUI.ShowPanel(true);
     }
     
     private void SpawnEntities(BattleInfo battleInfo)

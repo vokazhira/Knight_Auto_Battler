@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e04df3ac3120acf44bf48e690d6ba4cc, type: 3}
   m_Name: Enemy1
   m_EditorClassIdentifier: 
-  Sprite: {fileID: 21300000, guid: 8f31f7b4e0bdab94182af78c52249983, type: 3}
+  Sprite: {fileID: 21300000, guid: 2b5e1f27bb41f3f408211c4643d8f247, type: 3}
   Health: 20
-  Damage: 5
-  AttackDelay: 3
+  Damage: 10
+  AttackDelay: 1
   ExpReward: 1
