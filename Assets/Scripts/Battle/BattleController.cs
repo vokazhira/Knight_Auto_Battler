@@ -6,18 +6,6 @@ using UnityEngine;
 public class BattleController : MonoBehaviour
 {
     public static BattleController Instance;
-
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            Instance = this;
-        }
-    }
     
     [SerializeField] private PlayerEntity _playerPrefab;
     [SerializeField] private EnemyEntity _enemyPrefab;
@@ -45,6 +33,18 @@ public class BattleController : MonoBehaviour
         EventManager.Unsubscribe(GameEvents.EnemyDeath, CheckBattleWin);
         EventManager.Unsubscribe(GameEvents.StartLevel, OnStartLevel);
         EventManager.Unsubscribe(GameEvents.PlayerDied, OnPlayerDied);
+    }
+    
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
     }
 
     private void Start()

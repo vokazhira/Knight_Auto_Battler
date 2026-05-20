@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   Sprite: {fileID: 21300000, guid: 7295007a4f71b1d48a13b13b05491cd7, type: 3}
-  Health: 50
+  Health: 200
   Damage: 10
   AttackDelay: 0.5
   Armor: 4
