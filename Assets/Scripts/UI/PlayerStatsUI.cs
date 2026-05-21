@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerDataUI : MonoBehaviour
+public class PlayerStatsUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _maxHealthText;
     [SerializeField] private TextMeshProUGUI _armorText;

@@ -12,6 +12,8 @@ public class ItemStatsPanel : MonoBehaviour
     [SerializeField] private ItemStatLinePanel _damageItemStatLine;
     [SerializeField] private ItemStatLinePanel _attackDelayItemStatLine;
     
+    [SerializeField] private Canvas _canvas;
+    
     private Item _item; 
     
     public void UpdateItem(Item item)
@@ -30,10 +32,13 @@ public class ItemStatsPanel : MonoBehaviour
     {
         if (slotTransform == null) return;
         
-        RectTransform rectTransform = GetComponent<RectTransform>();
+        RectTransform panelRect = GetComponent<RectTransform>();
         
-        Vector3 worldPos = slotTransform.position;
-        rectTransform.position = worldPos;
+        Vector3 slotWorldPos = slotTransform.position;
+
+        slotWorldPos.y += 150f;
+        
+        panelRect.position = slotWorldPos;
     }
 
     private void UpdateAllItemStatLines()

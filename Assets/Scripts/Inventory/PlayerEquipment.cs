@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class PlayerEquipment : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private EquipmentSlot[] _slots;
+
+    public void EquipItem()
     {
-        
+        //TODO: Передать значение айтема в PlayerEntity + PlayerStats. Через событие?
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UnequipItem()
     {
-        
+        //TODO: вернуть предмет в инвентарь 
     }
 }

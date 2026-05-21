@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ItemSpawner : MonoBehaviour
 {
@@ -9,14 +11,7 @@ public class ItemSpawner : MonoBehaviour
     
     [SerializeField][Range(0f, 1f)] private float _dropChance = 0.2f;
     
-    [SerializeField] private int _minHealth = 5;
-    [SerializeField] private int _maxHealth = 50;
-    [SerializeField] private int _minArmor = 1;
-    [SerializeField] private int _maxArmor = 10;
-    [SerializeField] private int _minDamage = 1;
-    [SerializeField] private int _maxDamage = 15;
-    [SerializeField] private int _minAttackDelay = 1;
-    [SerializeField] private int _maxAttackDelay = 5;
+    [SerializeField] private ItemStats _itemStats;
 
     private void OnEnable()
     {
@@ -59,7 +54,7 @@ public class ItemSpawner : MonoBehaviour
         int statCount = GetStatCountByRarity(itemRarity);
         GetRandomStats(statCount, ref health, ref armor, ref damage, ref attackDelay, itemType);
         Item newItem = new Item(health, armor, damage, attackDelay, itemIcon, itemType, itemRarity);
-        
+         
         return newItem;
     }
     
@@ -104,26 +99,26 @@ public class ItemSpawner : MonoBehaviour
         switch (statType)
         {
             case StatType.Health:
-                min = _minHealth;
-                max = _maxHealth;
+                min = _itemStats._minHealth;
+                max = _itemStats._maxHealth;
                 health = Mathf.RoundToInt(Random.Range(min, max + 1));
                 break;
             
             case StatType.Armor:
-                min = _minArmor;
-                max = _maxArmor;
+                min = _itemStats._minArmor;
+                max = _itemStats._maxArmor;
                 armor = Mathf.RoundToInt(Random.Range(min, max + 1));
                 break;
             
             case StatType.Damage:
-                min = _minDamage;
-                max = _maxDamage;
+                min = _itemStats._minDamage;
+                max = _itemStats._maxDamage;
                 damage = Mathf.RoundToInt(Random.Range(min, max + 1));
                 break;
             
             case StatType.AttackDelay:
-                min = _minAttackDelay;
-                max = _maxAttackDelay;
+                min = _itemStats._minAttackDelay;
+                max = _itemStats._maxAttackDelay;
                 attackDelay = Mathf.RoundToInt(Random.Range(min, max + 1));
                 break;
         }
@@ -131,6 +126,8 @@ public class ItemSpawner : MonoBehaviour
 
     private StatType GetPrimaryStat(ItemType itemType)
     {
+        StatType[] allStats = { StatType.Health, StatType.Armor, StatType.Damage, StatType.AttackDelay };
+        
         switch (itemType)
         {
             case ItemType.Helmet:
@@ -145,12 +142,8 @@ public class ItemSpawner : MonoBehaviour
                 return StatType.Health;
 
             case ItemType.Ring:
-                StatType[] allStats = { StatType.Health, StatType.Armor, StatType.Damage, StatType.AttackDelay };
-                return allStats[Random.Range(0, allStats.Length)];
             case ItemType.Necklace:
-                StatType[] Stats = { StatType.Health, StatType.Armor, StatType.Damage, StatType.AttackDelay };
-                return Stats[Random.Range(0, Stats.Length)];
-            
+                return allStats[Random.Range(0, allStats.Length)];
             default:
                 return StatType.Health;
         }
@@ -187,7 +180,7 @@ public class ItemSpawner : MonoBehaviour
             case ItemRarity.Uncommon: return 1.2f;
             case ItemRarity.Rare: return 1.5f;
             case ItemRarity.Epic: return 2f;
-            default: return 0.5f;
+            default: return 1f;
         }
     }
 
@@ -200,4 +193,17 @@ public class ItemSpawner : MonoBehaviour
         
         return null;
     }
+}
+
+[Serializable]
+public struct ItemStats
+{
+    public int _minHealth;
+    public int _maxHealth;
+    public int _minArmor;
+    public int _maxArmor;
+    public int _minDamage;
+    public int _maxDamage;
+    public int _minAttackDelay;
+    public int _maxAttackDelay;
 }
