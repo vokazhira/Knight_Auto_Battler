@@ -7,9 +7,9 @@ public class DropSlot : MonoBehaviour, IDropHandler
 {
     public void OnDrop(PointerEventData eventData)
     {
-        if (transform.childCount == 2)
+        /*if (transform.childCount == 2)
         {
             eventData.pointerDrag.transform.SetParent(transform);
-        }
+        }*/
     }
 }

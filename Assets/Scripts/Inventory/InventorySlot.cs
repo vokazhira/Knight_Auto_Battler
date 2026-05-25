@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Lean.Pool;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -15,14 +13,15 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     private bool _isEmpty = true;
     
     public bool IsEmpty => _isEmpty;
-    
+    public Item CurrentItem => _currentItem;
+
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!_isEmpty)
+        if (!_isEmpty && _currentItem != null)
         {
             _itemStatPanel.UpdateItem(_currentItem);
             _itemStatPanel.UpdatePanelInfo();
-            _itemStatPanel.ShowAboveSlot(this.GetComponent<RectTransform>());
+            _itemStatPanel.ShowAboveSlot(GetComponent<RectTransform>());
             
             _itemStatPanel.gameObject.SetActive(true);
         }
@@ -35,6 +34,8 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void SetItem(Item item)
     {
+        if (item == null) return;
+
         _currentItem = item;
         _isEmpty = false;
 
@@ -63,6 +64,7 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         if (dragDrop != null)
         {
             dragDrop.SetItem(_currentItem);
+            dragDrop.SetSlot(this);
         }
     }
 

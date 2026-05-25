@@ -46,4 +46,8 @@ public static class GameEvents
     public const string StartLevel = "StartLevel";
     public const string LevelCompleted = "LevelCompleted";
     public const string LevelFailed = "LevelFailed";
+    public const string ItemMoved = "ItemMoved";
+    public const string ItemEquipped = "ItemEquipped";
+    public const string ItemUnequipped = "ItemUnequipped";
+    public const string PlayerStatsChanged = "PlayerStatsChanged";
 }

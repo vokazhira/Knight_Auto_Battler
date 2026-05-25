@@ -6,13 +6,25 @@ public class PlayerEquipment : MonoBehaviour
 {
     [SerializeField] private EquipmentSlot[] _slots;
 
-    public void EquipItem()
+    private void OnEnable()
     {
-        //TODO: Передать значение айтема в PlayerEntity + PlayerStats. Через событие?
+        EventManager.Subscribe(GameEvents.ItemEquipped, OnItemEquipped);
+        EventManager.Subscribe(GameEvents.ItemUnequipped, OnItemUnequipped);
     }
 
-    public void UnequipItem()
+    private void OnDisable()
     {
-        //TODO: вернуть предмет в инвентарь 
+        EventManager.Unsubscribe(GameEvents.ItemEquipped, OnItemEquipped);
+        EventManager.Unsubscribe(GameEvents.ItemUnequipped, OnItemUnequipped);
+    }
+
+    private void OnItemEquipped(object obj)
+    {
+        
+    }
+
+    private void OnItemUnequipped(object obj)
+    {
+        
     }
 }

@@ -10,6 +10,11 @@ public class Item
     public int Damage {get; private set;}
     public int AttackDelay {get; private set;}
     
+    public int GetHealthBonus() => Health;
+    public int GetArmorBonus() => Armor;
+    public int GetDamageBonus() => Damage;
+    public int GetAttackDelayBonus() => AttackDelay;
+    
     public Sprite Sprite {get; private set;}
     public ItemType Type {get; private set;}
     public ItemRarity Rarity {get; private set;}
