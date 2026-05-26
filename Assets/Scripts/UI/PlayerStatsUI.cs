@@ -16,20 +16,18 @@ public class PlayerStatsUI : MonoBehaviour
     private void OnEnable()
     {
         _battleController = BattleController.Instance;
-        EventManager.Subscribe(GameEvents.PlayerStatsChanged, OnStatsChanged);
-        UpdateAllStats();
     }
 
     private void OnDisable()
     {
-        EventManager.Unsubscribe(GameEvents.PlayerStatsChanged, OnStatsChanged);
+
     }
     
-    /*private void Start()
+    private void Start()
     {
         _battleController = BattleController.Instance;
         UpdateAllStats();
-    }*/
+    }
     
     private void OnStatsChanged(object obj)
     {
