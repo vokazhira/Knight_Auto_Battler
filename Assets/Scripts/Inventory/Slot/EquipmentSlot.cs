@@ -18,10 +18,16 @@ public class EquipmentSlot : Slot
     public override void SetItem(Item item)
     {
         if (!CanAcceptItem(item)) return;
-
+        
         base.SetItem(item);
-
-        if (_currentSlotVisual == null && _slotItemPrefab != null)
+        
+        if (_currentSlotVisual != null)
+        {
+            LeanPool.Despawn(_currentSlotVisual);
+            _currentSlotVisual = null;
+        }
+        
+        if (_slotItemPrefab != null)
         {
             _currentSlotVisual = LeanPool.Spawn(_slotItemPrefab, transform);
             
@@ -34,7 +40,7 @@ public class EquipmentSlot : Slot
         }
 
         Image itemImage = _currentSlotVisual?.GetComponent<Image>();
-        if (itemImage != null)
+        if (itemImage != null && item != null)
         {
             itemImage.sprite = item.Sprite;
             Color color = itemImage.color;
@@ -52,12 +58,12 @@ public class EquipmentSlot : Slot
 
     public override void ClearSlot()
     {
-        base.ClearSlot();
-
         if (_currentSlotVisual != null)
         {
             LeanPool.Despawn(_currentSlotVisual);
             _currentSlotVisual = null;
         }
+
+        base.ClearSlot();
     }
 }

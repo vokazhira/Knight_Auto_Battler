@@ -41,7 +41,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     {
         _canvasGroup.blocksRaycasts = true;
         
-        var dropSlot = eventData.pointerEnter?.GetComponentInParent<Slot>();
+        Slot dropSlot = eventData.pointerEnter?.GetComponentInParent<Slot>();
  
         if (dropSlot != null && dropSlot != _currentSlot && _currentSlot != null)
         {

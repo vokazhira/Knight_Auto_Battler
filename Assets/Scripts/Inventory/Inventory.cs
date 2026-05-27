@@ -30,31 +30,40 @@ public class Inventory : MonoBehaviour
     private void MoveItem(Slot fromSlot, Slot toSlot)
     {
         if (fromSlot == null || toSlot == null || fromSlot == toSlot) return;
-
+        
         Item itemToMove = fromSlot.CurrentItem;
         if (itemToMove == null) return;
-
+        
         if (!toSlot.CanAcceptItem(itemToMove)) return;
-
+        
         Item itemInTarget = toSlot.CurrentItem;
         
-        fromSlot.ClearSlot();
-        toSlot.ClearSlot();
-        
-        toSlot.SetItem(itemToMove);
-        
-        if (itemInTarget != null)
+        if (itemInTarget != null && toSlot is EquipmentSlot)
         {
-            fromSlot.SetItem(itemInTarget);
+            EventManager.Invoke(GameEvents.ItemUnequipped, itemInTarget);
         }
         
-        if (toSlot is EquipmentSlot)
-        {
-            EventManager.Invoke(GameEvents.ItemEquipped, itemToMove);
-        }
         if (fromSlot is EquipmentSlot)
         {
             EventManager.Invoke(GameEvents.ItemUnequipped, itemToMove);
+        }
+        
+        fromSlot.ClearSlot();
+        toSlot.ClearSlot();
+    
+        if (itemInTarget != null)
+        {
+            fromSlot.SetItem(itemInTarget);
+            if (fromSlot is EquipmentSlot)
+            {
+                EventManager.Invoke(GameEvents.ItemEquipped, itemInTarget);
+            }
+        }
+    
+        toSlot.SetItem(itemToMove);
+        if (toSlot is EquipmentSlot)
+        {
+            EventManager.Invoke(GameEvents.ItemEquipped, itemToMove);
         }
     }
     
