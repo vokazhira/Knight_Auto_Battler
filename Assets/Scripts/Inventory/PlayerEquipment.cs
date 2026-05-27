@@ -20,11 +20,17 @@ public class PlayerEquipment : MonoBehaviour
 
     private void OnItemEquipped(object obj)
     {
-        
+        if (obj is Item item)
+        {
+            EventManager.Invoke(GameEvents.ApplyEquipmentBonus, new EquipmentBonusData(item, true));
+        }
     }
 
     private void OnItemUnequipped(object obj)
     {
-        
+        if (obj is Item item)
+        {
+            EventManager.Invoke(GameEvents.ApplyEquipmentBonus, new EquipmentBonusData(item, false));
+        }
     }
 }

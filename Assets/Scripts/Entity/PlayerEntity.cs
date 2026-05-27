@@ -16,8 +16,11 @@ public class PlayerEntity : Entity
             base.Init(playerData);
             Armor = playerData.Armor;
             Exp = playerData.Exp;
+            
             EventManager.Subscribe(GameEvents.EnemyDeath, AddExp);
             EventManager.Subscribe(GameEvents.PlayerDied, ResetHealth);
+            EventManager.Subscribe(GameEvents.ApplyEquipmentBonus, OnEquipmentBonusChanged);
+            
         }
     }
 
@@ -25,10 +28,7 @@ public class PlayerEntity : Entity
     {
         int damageToTake = damage - Armor;
 
-        if (damageToTake < 0)
-        {
-            damageToTake = 0;
-        }
+        if (damageToTake < 0) damageToTake = 1;
         
         base.TakeDamage(damageToTake);
     }
@@ -57,5 +57,26 @@ public class PlayerEntity : Entity
     public override void Die()
     {
         EventManager.Invoke(GameEvents.PlayerDied);
+    }
+
+    private void OnEquipmentBonusChanged(object obj)
+    {
+        if (obj is EquipmentBonusData equipmentBonusData)
+        {
+            int sign;
+            if (equipmentBonusData.IsEquip) sign = 1;
+            else sign = -1;
+
+            MaxHealth += equipmentBonusData.Item.Health * sign;
+            Armor += equipmentBonusData.Item.Armor * sign;
+            Damage += equipmentBonusData.Item.Damage * sign;
+
+            if (equipmentBonusData.Item.AttackDelay != 0)
+            {
+                AttackDelay += equipmentBonusData.Item.AttackDelay * sign;
+            }
+            
+            EventManager.Invoke(GameEvents.PlayerStatsChanged);
+        }
     }
 }

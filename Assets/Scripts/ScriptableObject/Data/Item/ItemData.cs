@@ -20,7 +20,7 @@ public enum ItemType
 {
     Helmet,
     Shield,
-    Sword,
+    Weapon,
     Armor,
     Boots,
     Ring,

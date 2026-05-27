@@ -50,4 +50,5 @@ public static class GameEvents
     public const string ItemEquipped = "ItemEquipped";
     public const string ItemUnequipped = "ItemUnequipped";
     public const string PlayerStatsChanged = "PlayerStatsChanged";
+    public const string ApplyEquipmentBonus = "ApplyEquipmentBonus";
 }

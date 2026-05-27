@@ -2031,6 +2031,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecc26a7e1f198384cb61a1375783d738, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _itemStatPanel: {fileID: 598066957}
   _acceptedType: 0
 --- !u!1 &540586662
 GameObject:
@@ -3603,6 +3604,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecc26a7e1f198384cb61a1375783d738, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _itemStatPanel: {fileID: 598066957}
   _acceptedType: 0
 --- !u!1001 &867691220
 PrefabInstance:
@@ -4030,6 +4032,7 @@ GameObject:
   - component: {fileID: 913994645}
   - component: {fileID: 913994647}
   - component: {fileID: 913994646}
+  - component: {fileID: 913994648}
   m_Layer: 5
   m_Name: EquipmentPanel
   m_TagString: Untagged
@@ -4101,6 +4104,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 913994644}
   m_CullTransparentMesh: 1
+--- !u!114 &913994648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 913994644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa62c70dfea3d0344ac2102c3d3c37d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _slots: []
 --- !u!1 &919227702
 GameObject:
   m_ObjectHideFlags: 0
@@ -4804,6 +4820,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecc26a7e1f198384cb61a1375783d738, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _itemStatPanel: {fileID: 598066957}
   _acceptedType: 0
 --- !u!224 &1096464204 stripped
 RectTransform:
@@ -5199,6 +5216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecc26a7e1f198384cb61a1375783d738, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _itemStatPanel: {fileID: 598066957}
   _acceptedType: 0
 --- !u!1 &1176907283
 GameObject:
@@ -5263,6 +5281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecc26a7e1f198384cb61a1375783d738, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _itemStatPanel: {fileID: 598066957}
   _acceptedType: 0
 --- !u!224 &1240789540 stripped
 RectTransform:
@@ -6170,6 +6189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecc26a7e1f198384cb61a1375783d738, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _itemStatPanel: {fileID: 598066957}
   _acceptedType: 0
 --- !u!1 &1460878651
 GameObject:
@@ -7193,6 +7213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecc26a7e1f198384cb61a1375783d738, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _itemStatPanel: {fileID: 598066957}
   _acceptedType: 0
 --- !u!1 &1690883399
 GameObject:

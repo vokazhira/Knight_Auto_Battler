@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -7,17 +5,14 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 {
     public Item CurrentItem { get; private set; }
     
-    private InventorySlot _currentSlot;
-    private EquipmentSlot _equipmentSlot;
+    private Slot _currentSlot;
 
     private Transform _originalParent;
     private CanvasGroup _canvasGroup;
-    private Canvas _canvas;
 
     private void Awake()
     { 
         _canvasGroup = GetComponent<CanvasGroup>();
-        _canvas = GetComponentInParent<Canvas>();
     }
 
     public void SetItem(Item item)
@@ -25,7 +20,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         CurrentItem = item;
     }
 
-    public void SetSlot(InventorySlot slot)
+    public void SetSlot(Slot slot)
     {
         _currentSlot = slot;
     }
@@ -45,17 +40,29 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public void OnEndDrag(PointerEventData eventData)
     {
         _canvasGroup.blocksRaycasts = true;
-
-        var dropSlot = eventData.pointerEnter?.GetComponentInParent<InventorySlot>();
-
+        
+        var dropSlot = eventData.pointerEnter?.GetComponentInParent<Slot>();
+ 
         if (dropSlot != null && dropSlot != _currentSlot && _currentSlot != null)
         {
-            EventManager.Invoke(GameEvents.ItemMoved, new ItemMoveData(_currentSlot, dropSlot));
+            if (dropSlot.CanAcceptItem(CurrentItem))
+            {
+                EventManager.Invoke(GameEvents.ItemMoved, new ItemMoveData(_currentSlot, dropSlot));
+            }
+            else
+            {
+                ReturnToOriginalPosition();
+            }
         }
         else
         {
-            transform.SetParent(_originalParent);
-            transform.localPosition = Vector3.zero;
+            ReturnToOriginalPosition();
         }
+    }
+
+    private void ReturnToOriginalPosition()
+    {
+        transform.SetParent(_originalParent);
+        transform.localPosition = Vector3.zero;
     }
 }

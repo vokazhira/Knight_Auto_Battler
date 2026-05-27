@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ItemMoveData
 {
-    public InventorySlot FromSlot { get; }
-    public InventorySlot ToSlot { get; }
+    public Slot FromSlot { get; }
+    public Slot ToSlot { get; }
 
-    public ItemMoveData(InventorySlot from, InventorySlot to)
+    public ItemMoveData(Slot from, Slot to)
     {
         FromSlot = from;
         ToSlot = to;

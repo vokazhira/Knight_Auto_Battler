@@ -24,37 +24,45 @@ public class Inventory : MonoBehaviour
                 return;
             }
         }
-        // TODO: Инвентарь полон
         Debug.LogWarning("Инвентарь полон!");
     }
 
+    private void MoveItem(Slot fromSlot, Slot toSlot)
+    {
+        if (fromSlot == null || toSlot == null || fromSlot == toSlot) return;
+
+        Item itemToMove = fromSlot.CurrentItem;
+        if (itemToMove == null) return;
+
+        if (!toSlot.CanAcceptItem(itemToMove)) return;
+
+        Item itemInTarget = toSlot.CurrentItem;
+        
+        fromSlot.ClearSlot();
+        toSlot.ClearSlot();
+        
+        toSlot.SetItem(itemToMove);
+        
+        if (itemInTarget != null)
+        {
+            fromSlot.SetItem(itemInTarget);
+        }
+        
+        if (toSlot is EquipmentSlot)
+        {
+            EventManager.Invoke(GameEvents.ItemEquipped, itemToMove);
+        }
+        if (fromSlot is EquipmentSlot)
+        {
+            EventManager.Invoke(GameEvents.ItemUnequipped, itemToMove);
+        }
+    }
+    
     private void OnItemMoved(object obj)
     {
         if (obj is ItemMoveData moveData)
         {
             MoveItem(moveData.FromSlot, moveData.ToSlot);
-        }
-    }
-
-    private void MoveItem(InventorySlot fromSlot, InventorySlot toSlot)
-    {
-        if (fromSlot == null || toSlot == null) return;
-
-        Item itemToMove = fromSlot.CurrentItem;
-
-        if (toSlot.IsEmpty)
-        {
-            fromSlot.ClearSlot();
-            toSlot.SetItem(itemToMove);
-        }
-        else
-        {
-            Item temp = toSlot.CurrentItem;
-            toSlot.ClearSlot();
-            toSlot.SetItem(itemToMove);
-
-            fromSlot.ClearSlot();
-            fromSlot.SetItem(temp);
         }
     }
 

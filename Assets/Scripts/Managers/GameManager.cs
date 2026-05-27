@@ -34,11 +34,6 @@ public class GameManager : MonoBehaviour
         _completedLevelsPerAct = new int[_acts.Length];
         _completedLevelsPerAct[0] = 0;
     }
-    
-    private void Start()
-    {
-        
-    }
 
     public void SetCurrentActIndex(int actIndex)
     {

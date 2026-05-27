@@ -38,7 +38,7 @@ public class ItemSpawner : MonoBehaviour
     {
         ItemType[] allTypes = new[]
         {
-            ItemType.Helmet, ItemType.Shield, ItemType.Sword,
+            ItemType.Helmet, ItemType.Shield, ItemType.Weapon,
             ItemType.Armor, ItemType.Boots, ItemType.Ring, ItemType.Necklace
         };
         
@@ -134,7 +134,7 @@ public class ItemSpawner : MonoBehaviour
                 return StatType.Armor;
             case ItemType.Shield:
                 return StatType.Armor;
-            case ItemType.Sword:
+            case ItemType.Weapon:
                 return StatType.Damage;
             case ItemType.Boots:
                 return StatType.AttackDelay;
