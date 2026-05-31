@@ -13,7 +13,7 @@ public class PlayerEntity : Entity
     private int _maxExp = 100;
     public int MaxExp => _maxExp;
     
-    private int _currentLevel;
+    private int _currentLevel = 1;
     public int CurrentLevel => _currentLevel;
     
     private int _statsPointCount = 0;

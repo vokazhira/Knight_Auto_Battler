@@ -17,4 +17,4 @@ MonoBehaviour:
   Damage: 10
   AttackDelay: 0.5
   Armor: 4
-  Exp: 10
+  Exp: 0
