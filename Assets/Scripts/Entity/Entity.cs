@@ -6,10 +6,17 @@ using UnityEngine;
 
 public abstract class Entity : MonoBehaviour
 {
-    public int CurrentHealth { get; protected set; }
-    public int MaxHealth { get; protected set; }
-    public int Damage { get; protected set; }
-    public float AttackDelay { get; protected set; }
+    protected int _currentHealth;
+    public int CurrentHealth => _currentHealth;
+    
+    protected int _maxHealth;
+    public int MaxHealth => _maxHealth;
+    
+    protected int _damage;
+    public int Damage => _damage;
+    
+    protected float _attackDelay;
+    public float AttackDelay => _attackDelay;
 
     protected float _currentAttackTime;
     protected SpriteRenderer _spriteRenderer;
@@ -38,10 +45,10 @@ public abstract class Entity : MonoBehaviour
 
     public virtual void Init(EntityData data)
     {
-        MaxHealth = data.Health;
-        CurrentHealth = MaxHealth;
-        Damage = data.Damage;
-        AttackDelay = data.AttackDelay;
+        _maxHealth = data.Health;
+        _currentHealth = MaxHealth;
+        _damage = data.Damage;
+        _attackDelay = data.AttackDelay;
         _spriteRenderer.sprite = data.Sprite;
             
         HealthChanged?.Invoke(1f);
@@ -49,10 +56,10 @@ public abstract class Entity : MonoBehaviour
 
     public virtual void TakeDamage(int damage)
     {
-        CurrentHealth -= damage;
+        _currentHealth -= damage;
         if (CurrentHealth <= 0)
         {
-            CurrentHealth = 0;
+            _currentHealth = 0;
             Die();
         }
         else
@@ -64,7 +71,7 @@ public abstract class Entity : MonoBehaviour
     
     public void ResetHealth(object obj)
     {
-        CurrentHealth = MaxHealth;
+        _currentHealth = MaxHealth;
         HealthChanged?.Invoke(CurrentHealth/MaxHealth);
     }
 

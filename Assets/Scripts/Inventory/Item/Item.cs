@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class Item
     public int Armor {get; private set;}
     public int Damage {get; private set;}
     public int AttackDelay {get; private set;}
+    public int SalePrice { get; private set; }
     
     public Sprite Sprite {get; private set;}
     public ItemType Type {get; private set;}
@@ -23,5 +25,22 @@ public class Item
         Sprite = sprite;
         Type = type;
         Rarity = rarity;
+        SalePrice = CalculateSalePrice();
+    }
+    
+    private int CalculateSalePrice()
+    {
+        int rarityPrice = Rarity switch
+        {
+            ItemRarity.Common => 12,
+            ItemRarity.Uncommon => 25,
+            ItemRarity.Rare => 50,
+            ItemRarity.Epic => 100,
+            _ => 10
+        };
+        
+        int statsValue = Health + Armor + Damage + (int)Mathf.Abs(AttackDelay) * 2;
+
+        return rarityPrice + statsValue * 2;
     }
 }

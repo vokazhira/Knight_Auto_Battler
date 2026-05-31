@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ActInfo[] _acts;
     [SerializeField] private LevelSelectionUI _levelSelectionUI;
     
+    public PlayerEntity Player { get; private set; }
     public PlayerData PlayerData => _playerData;
     public ActInfo[] Acts => _acts;
     public LevelSelectionUI LevelSelectionUI => _levelSelectionUI;
@@ -77,4 +78,6 @@ public class GameManager : MonoBehaviour
         
         return _completedLevelsPerAct[actIndex - 1] >= _acts[actIndex - 1].Levels.Length;
     }
+    
+    public void SetPlayer(PlayerEntity player) => Player = player;
 }

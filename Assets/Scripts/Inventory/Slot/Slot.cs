@@ -30,13 +30,21 @@ public abstract class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public virtual void OnPointerEnter(PointerEventData eventData)
     {
-        if (!IsEmpty && _currentItem != null && _itemStatPanel != null)
+        if (IsEmpty || _currentItem == null || _itemStatPanel == null)
         {
-            _itemStatPanel.UpdateItem(_currentItem);
-            _itemStatPanel.UpdatePanelInfo();
-            _itemStatPanel.ShowAboveSlot(GetComponent<RectTransform>());
-            _itemStatPanel.gameObject.SetActive(true);
+            if (_itemStatPanel != null && _itemStatPanel.gameObject.activeSelf)
+            {
+                _itemStatPanel.gameObject.SetActive(false);
+            }
+            
+            return;
         }
+        
+        _itemStatPanel.UpdateItem(_currentItem);
+        _itemStatPanel.UpdatePanelInfo();
+        _itemStatPanel.ShowAboveSlot(GetComponent<RectTransform>());
+        _itemStatPanel.gameObject.SetActive(true);
+        
     }
 
     public virtual void OnPointerExit(PointerEventData eventData)

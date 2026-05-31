@@ -5,12 +5,13 @@ using UnityEngine.UI;
 public class ItemStatsPanel : MonoBehaviour
 {
     [SerializeField] private Image _rarityBorderImage;
-    [SerializeField] private TextMeshProUGUI _salePriceText;
     
     [SerializeField] private ItemStatLinePanel _healthItemStatLine;
     [SerializeField] private ItemStatLinePanel _armorItemStatLine;
     [SerializeField] private ItemStatLinePanel _damageItemStatLine;
     [SerializeField] private ItemStatLinePanel _attackDelayItemStatLine;
+    
+    [SerializeField] private TextMeshProUGUI _salePriceText;
     
     [SerializeField] private Canvas _canvas;
     
@@ -23,6 +24,12 @@ public class ItemStatsPanel : MonoBehaviour
 
     public void UpdatePanelInfo()
     {
+        if (_item == null)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+        
         UpdateRarityBorderColor();
         UpdateAllItemStatLines();
         UpdateSalePrice();
@@ -80,10 +87,19 @@ public class ItemStatsPanel : MonoBehaviour
             itemStatLine.SetStatValueText(value);
         }
     }
-
+    
     private void UpdateSalePrice()
     {
-        _salePriceText.text = "10";
-        //TODO: Придумать формулу для значения цены продажи предмета
+        if (_salePriceText == null) return;
+
+        if (_item != null)
+        {
+            _salePriceText.text = $"{_item.SalePrice}";
+            _salePriceText.gameObject.SetActive(true);
+        }
+        else
+        {
+            _salePriceText.gameObject.SetActive(false);
+        }
     }
 }

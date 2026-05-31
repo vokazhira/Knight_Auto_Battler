@@ -41,6 +41,9 @@ public static class EventManager
 public static class GameEvents
 {
     public const string PlayerDied = "PlayerDied";
+    public const string PlayerLevelUp = "PlayerLevelUp";
+    public const string StatPointUsed = "StatPointUsed";
+    public const string ItemRemoved = "ItemRemoved";
     public const string EnemyDeath = "EnemyDeath";
     public const string ProgressUpdated = "ProgressUpdated";
     public const string StartLevel = "StartLevel";
@@ -51,4 +54,7 @@ public static class GameEvents
     public const string ItemUnequipped = "ItemUnequipped";
     public const string PlayerStatsChanged = "PlayerStatsChanged";
     public const string ApplyEquipmentBonus = "ApplyEquipmentBonus";
+    public const string CurrencyChanged = "CurrencyChanged";
+    public const string ItemSold = "ItemSold";
+    public const string StatUpgradeRequested = "StatUpgradeRequested";
 }

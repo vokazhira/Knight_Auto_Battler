@@ -16,4 +16,4 @@ MonoBehaviour:
   Health: 20
   Damage: 10
   AttackDelay: 1
-  ExpReward: 1
+  ExpReward: 10

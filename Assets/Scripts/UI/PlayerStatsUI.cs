@@ -10,56 +10,72 @@ public class PlayerStatsUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _armorText;
     [SerializeField] private TextMeshProUGUI _damageText;
     [SerializeField] private TextMeshProUGUI _attackDelayText;
+    [SerializeField] private TextMeshProUGUI _statPointsText;
     
-    private BattleController _battleController;
+    [SerializeField] private Button _upHealthButton;
+    [SerializeField] private Button _upArmorButton;
+    [SerializeField] private Button _upDamageButton;
+    [SerializeField] private Button _upAttackDelayButton;
+    
+    /*private BattleController _battleController;*/
     
     private void OnEnable()
     {
-        _battleController = BattleController.Instance;
         EventManager.Subscribe(GameEvents.PlayerStatsChanged, OnStatsChanged);
+        EventManager.Subscribe(GameEvents.PlayerLevelUp, OnPlayerLevelUp);
+        
+        _upHealthButton.onClick.AddListener(() => RequestStatUpgrade(StatType.Health));
+        _upArmorButton.onClick.AddListener(() => RequestStatUpgrade(StatType.Armor));
+        _upDamageButton.onClick.AddListener(() => RequestStatUpgrade(StatType.Damage));
+        _upAttackDelayButton.onClick.AddListener(() => RequestStatUpgrade(StatType.AttackDelay));
     }
 
     private void OnDisable()
     {
         EventManager.Unsubscribe(GameEvents.PlayerStatsChanged, OnStatsChanged);
+        EventManager.Unsubscribe(GameEvents.PlayerLevelUp, OnPlayerLevelUp);
+        
+        _upHealthButton.onClick.RemoveAllListeners();
+        _upArmorButton.onClick.RemoveAllListeners();
+        _upDamageButton.onClick.RemoveAllListeners();
+        _upAttackDelayButton.onClick.RemoveAllListeners();
     }
     
     private void Start()
     {
-        _battleController = BattleController.Instance;
-        UpdateAllStats();
+        
+    }
+    
+    private void RequestStatUpgrade(StatType statType)
+    {
+        EventManager.Invoke(GameEvents.StatUpgradeRequested, statType);
     }
     
     private void OnStatsChanged(object obj)
     {
-        UpdateAllStats();
+        if (obj is PlayerStatsData data)
+        {
+            UpdateUI(data);
+        }
     }
 
-    public void UpdateMaxHealth()
+    private void OnPlayerLevelUp(object obj)
     {
-        _maxHealthText.text = $"Здоровье: {_battleController.Player.MaxHealth}";
+        if (obj is int statPointCount)
+        {
+            if (statPointCount > 0)
+            {
+                
+            }
+        }
     }
-
-    public void UpdateArmor()
+    
+    private void UpdateUI(PlayerStatsData data)
     {
-        _armorText.text = $"Защита: {_battleController.Player.Armor}";
-    }
-
-    public void UpdateDamage()
-    {
-        _damageText.text = $"Урон: {_battleController.Player.Damage}";
-    }
-
-    public void UpdateAttackDelay()
-    {
-        _attackDelayText.text = $"Скр. атаки: {_battleController.Player.AttackDelay}";
-    }
-
-    public void UpdateAllStats()
-    {
-        UpdateMaxHealth();
-        UpdateArmor();
-        UpdateDamage();
-        UpdateAttackDelay();
+        _maxHealthText.text = $"Здр : {data.MaxHealth}";
+        _armorText.text = $"Брн : {data.Armor}";
+        _damageText.text = $"Урн : {data.Damage}";
+        _attackDelayText.text = $"Скр : {data.AttackDelay}";
+        _statPointsText.text = $"{data.StatPoints}";
     }
 }

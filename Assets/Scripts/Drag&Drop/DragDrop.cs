@@ -25,6 +25,11 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         _currentSlot = slot;
     }
 
+    public Slot GetSlot()
+    {
+        return _currentSlot;
+    }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         _originalParent = transform.parent;
